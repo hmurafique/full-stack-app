@@ -53,15 +53,16 @@ cd full-stack-app
 ---
 
 ### 3️⃣ Create the Dockerfiles
-- Create the **Dockerfiles** for each of the services to containerized the services
+- Write **Dockerfiles** for each service (frontend, backend, auth, etc.) to containerize them.
 
 ---
 
 ### 4️⃣ Create the Docker Compose File
-- Create the **docker-compose.yml** File to build and run the services
+- Define all services in a **docker-compose.yml** file.
 
 ---
 
+# Phase 1: 🚀 Run Without Domain (Local / IP Based)
 ### 5️⃣ Build and start services
 ```bash
 docker compose build
@@ -70,7 +71,7 @@ docker compose up -d
 
 ---
 
-## With Domain + SSL (Host Machine Nginx)
+# Phase 2A: 🌍 With Domain + SSL (Host Machine Nginx)
 ### 1️⃣ Install Nginx
 ```bash
 sudo apt update
@@ -153,7 +154,7 @@ sudo certbot --nginx \
 
 ---
 
-## With Domain + SSL (Containerized Nginx)
+# Phase 2B: 🌍 With Domain + SSL (Containerized Nginx)
 ### 1️⃣ Add Nginx Service in docker-compose.yml
 ```yml
 nginx-proxy:
