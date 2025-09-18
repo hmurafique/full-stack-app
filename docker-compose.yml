@@ -1,0 +1,121 @@
+version: "3.9"
+
+services:
+  frontend-service:
+    build: ./frontend-service
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - backend-service
+
+  backend-service:
+    build: ./backend-service
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    depends_on:
+      - auth-service
+      - payments-service
+      - orders-service
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "6000:6000"
+    env_file:
+      - .env
+
+  payments-service:
+    build: ./payments-service
+    ports:
+      - "7000:7000"
+    env_file:
+      - .env
+
+  orders-service:
+    build: ./orders-service
+    ports:
+      - "7100:7100"
+    env_file:
+      - .env
+
+  notifications-service:
+    build: ./notifications-service
+    ports:
+      - "7200:7200"
+    env_file:
+      - .env
+
+  analytics-service:
+    build: ./analytics-service
+    ports:
+      - "7300:7300"
+    env_file:
+      - .env
+
+  catalog-service:
+    build: ./catalog-service
+    ports:
+      - "7400:7400"
+    env_file:
+      - .env
+
+  search-service:
+    build: ./search-service
+    ports:
+      - "7500:7500"
+    env_file:
+      - .env
+
+  worker-service:
+    build: ./worker-service
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq-service
+      - redis-service
+
+  email-service:
+    build: ./email-service
+    ports:
+      - "7600:7600"
+    env_file:
+      - .env
+
+  sms-service:
+    build: ./sms-service
+    ports:
+      - "7700:7700"
+    env_file:
+      - .env
+
+  postgres-service:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis-service:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  rabbitmq-service:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  postgres_data:
